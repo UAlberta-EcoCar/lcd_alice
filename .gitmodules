@@ -1,0 +1,12 @@
+[submodule "libraries/mcp2515_lib"]
+	path = libraries/mcp2515_lib
+	url = https://github.com/UAlberta-EcoCar/mcp2515_lib
+[submodule "libraries/CAN-BUS-MESSAGES"]
+	path = libraries/CAN-BUS-MESSAGES
+	url = https://github.com/UAlberta-EcoCar/CAN-BUS-MESSAGES.git
+[submodule "libraries/Adafruit-GFX-Library"]
+	path = libraries/Adafruit-GFX-Library
+	url = https://github.com/adafruit/Adafruit-GFX-Library.git
+[submodule "libraries/Adafruit_RA8875"]
+	path = libraries/Adafruit_RA8875
+	url = https://github.com/adafruit/Adafruit_RA8875.git
