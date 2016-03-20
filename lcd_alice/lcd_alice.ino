@@ -1,9 +1,14 @@
-void setup() {
-  // put your setup code here, to run once:
+#include "lcd_can.h"
 
+Can myCan;
+
+void setup() {
+  Serial.begin(9600);
+  myCan.begin();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  myCan.read(); // read at max speed
 
+  Serial.println(myCan.speed());
 }
