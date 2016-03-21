@@ -18,9 +18,11 @@ public:
   void send_headlights(bool state);
 
   void read();
-  uint16_t speed() { return _speed; }
+  bool speed_available();
+  uint16_t speed();
 private:
   unsigned int _speed;
+  unsigned int _speed_flag;
 };
 
 #endif

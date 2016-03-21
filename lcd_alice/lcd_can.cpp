@@ -62,9 +62,21 @@ void Can::read() {
   if(!digitalRead(CAN_INT)) {
     CanMessage message = can_get_message();
     // read motor speed
-    if( message.id == mspeed_msg.id()) _speed = message.data[0] | (message.data[1] << 8);
+    if( message.id == mspeed_msg.id()) {
+      _speed = message.data[0] | (message.data[1] << 8);
+      _speed_flag = true;
+    }
     // TODO: read time
     // TODO: read motor current / voltage
     // TODO: read fuel cell voltage / current
   }
+}
+
+/*
+ * Getters
+ */
+bool Can::speed_available() { return _speed_flag; }
+uint16_t Can::speed() {
+  _speed_flag = false;
+  return _speed;
 }
