@@ -40,6 +40,15 @@ void setup() {
   tft.drawBitmap(371, 370, hazards_bmp, 60, 53, COLOR_BUTTON_IMG);
   tft.drawBitmap(510, 385, wipers_bmp, 60, 31, COLOR_BUTTON_IMG);
 
+  // left indictor
+  tft.fillTriangle(30, 400, 75, 370, 75, 430, COLOR_INDICTORS);
+  tft.fillRect(75, 382, 30, 35, COLOR_INDICTORS);
+
+  // right indictor
+  tft.fillTriangle(770, 400, 725, 370, 725, 430, COLOR_INDICTORS);
+  tft.fillRect(695, 382, 30, 35, COLOR_INDICTORS);
+
+  
 
   myCan.begin();
 
