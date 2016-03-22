@@ -48,7 +48,9 @@ void setup() {
   tft.fillTriangle(770, 400, 725, 370, 725, 430, COLOR_INDICTORS);
   tft.fillRect(695, 382, 30, 35, COLOR_INDICTORS);
 
-  
+  tft.drawBitmap(31, 20, logo1_bmp, 24, 31, COLOR_LOGO_DARK);
+  tft.drawBitmap(61, 20, logo2_bmp, 68, 31, COLOR_LOGO_LIGHT);
+  tft.drawBitmap(132, 20, logo3_bmp, 68, 31, COLOR_LOGO_DARK);
 
   myCan.begin();
 
