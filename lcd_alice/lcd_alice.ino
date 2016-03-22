@@ -26,7 +26,6 @@ void setup() {
   tft.PWM1config(true, RA8875_PWM_CLK_DIV1024); // PWM output for backlight
   tft.PWM1out(255);
 
-
   tft.fillScreen(COLOR_BACKGROUND);
 
   // speedometer
@@ -40,9 +39,21 @@ void setup() {
   for(int i=0; i<sizeof(dial_lines)/sizeof(int)/4; i++) {
     tft.drawLine(dial_lines[i*4], dial_lines[i*4+1], dial_lines[i*4+2], dial_lines[i*4+3], COLOR_DIAL);
   }
-  for(int i=0; i<sizeof(speed_lines)/sizeof(int)/4; i++) {
+  for(int i=0; i<23; i++) {
     tft.drawLine(speed_lines[i*4], speed_lines[i*4+1], speed_lines[i*4+2], speed_lines[i*4+3], COLOR_SPEED);
   }
+  // add font
+  tft.drawChar(380, 210, '2', COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+  tft.drawChar(430, 210, '3', COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+  tft.drawBitmap(475, 245, kph_bmp, 37, 19, COLOR_FONT_SPEED);
+
+  // clock
+  tft.textMode();
+  tft.textSetCursor(650, 20);
+  tft.textColor(0xFFFF, COLOR_BACKGROUND);
+  tft.textEnlarge(1);
+  tft.textWrite("12:23:30");
+  tft.graphicsMode();
 
   // buttons
   tft.fillCircle(260, 400, 50, COLOR_BUTTON_LIGHT);

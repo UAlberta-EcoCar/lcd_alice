@@ -20,4 +20,6 @@
 #define COLOR_DIAL          0xB9C5    //0xc0392b
 #define COLOR_SPEED         0x055C    //0x00adee
 
+#define COLOR_FONT_SPEED    COLOR_INDICTORS
+
 #endif
