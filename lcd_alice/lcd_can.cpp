@@ -11,6 +11,9 @@ can_msg::MsgEncode headlights_msg( can_msg::BOOL, can_msg::AUX, can_msg::HEADLIG
 can_msg::MsgEncode horn_msg( can_msg::BOOL, can_msg::AUX, can_msg::HORN, can_msg::IMPORTANT, 1);
 //motor speed
 can_msg::MsgEncode mspeed_msg( can_msg::UINT16, can_msg::MOTOR, can_msg::MSPEED, can_msg::INFORMATION, 1 );
+// rtc
+can_msg::MsgEncode time_msg( can_msg::UINT8, can_msg::OTHER, can_msg::TIME, can_msg::INFORMATION, 6);
+
 /*
  * Initializes CAN bus
  */
@@ -76,7 +79,13 @@ void Can::read() {
       _speed = message.data[0] | (message.data[1] << 8);
       _speed_flag = true;
     }
-    // TODO: read time
+    // read time
+    if( message.id == time_msg.id() ) {
+      _time[0] = message.data[can_msg::HOUR];
+      _time[1] = message.data[can_msg::MINUTE];
+      _time[2] = message.data[can_msg::SECOND];
+      _time_flag = true;
+    }
     // TODO: read motor current / voltage
     // TODO: read fuel cell voltage / current
   }
@@ -85,8 +94,16 @@ void Can::read() {
 /*
  * Getters
  */
+// Speed
 bool Can::speed_available() { return _speed_flag; }
 uint16_t Can::speed() {
   _speed_flag = false;
   return _speed;
+}
+
+// Time
+bool Can::time_available() { return _time_flag; }
+unsigned int * Can::time() {
+  _time_flag = false;
+  return _time;
 }

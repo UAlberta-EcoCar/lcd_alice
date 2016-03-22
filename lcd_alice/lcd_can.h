@@ -17,13 +17,17 @@ public:
   void send_signals(bool left, bool right, bool hazards);
   void send_headlights(bool state);
   void send_horn(bool state);
-  
+
   void read();
   bool speed_available();
   uint16_t speed();
+  bool time_available();
+  unsigned int * time();
 private:
   unsigned int _speed;
-  unsigned int _speed_flag;
+  bool _speed_flag;
+  unsigned int _time[3];
+  bool _time_flag;
 };
 
 #endif

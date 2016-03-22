@@ -10,6 +10,7 @@ Joystick joyB(JOY_LEFT_2, JOY_RIGHT_2, JOY_UP_2, JOY_DOWN_2, JOY_PUSH_2);
 
 Timer displayTimer;
 Timer indicatorTimer;
+Timer rtcTimer;
 
 void setup() {
   Serial.begin(9600);
@@ -24,7 +25,7 @@ void setup() {
   myLcd.begin();
   myLcd.speed_dials();
   myLcd.logo();
-  myLcd.time(23, 48, 23);
+  myLcd.time(0, 0, 0);
 
   myLcd.speed(0);
   myLcd.light(false);
@@ -34,6 +35,7 @@ void setup() {
 
   displayTimer.reset();
   indicatorTimer.reset();
+  rtcTimer.reset();
 }
 
 bool indicator_left_flag = false;
@@ -43,8 +45,9 @@ int button = 1;
 int light = false;
 int wiper = false;
 int hazards = false;
+int speed = 0;
+unsigned int * now;
 
-int b = 0;
 void loop() {
   myCan.read(); // read at max speed
 
@@ -187,15 +190,24 @@ void loop() {
     }
   }
 
-
   if(displayTimer.elapsed(200)) {
-    myLcd.speed(b);
-    b++;
-    if(b > 60) b = 0;
     if(myCan.speed_available()) {
-      //Serial.println(a);
+      speed = myCan.speed();
+      Serial.print("Speed: ");
+      Serial.println(speed);
+      myLcd.speed(speed);
     }
   }
 
+  if(rtcTimer.elapsed(500)) {
+    if(myCan.time_available()) {
+      now = myCan.time();
+      Serial.print("Time: ");
+      Serial.print(now[0]); Serial.print(":");
+      Serial.print(now[1]); Serial.print(":");
+      Serial.println(now[2]);
+      myLcd.time(now[0], now[1], now[2]);
+    }
+  }
 
 }
