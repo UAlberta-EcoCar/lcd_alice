@@ -7,6 +7,8 @@ can_msg::MsgEncode wipers_msg( can_msg::BOOL, can_msg::AUX, can_msg::WIPERS, can
 can_msg::MsgEncode signals_msg( can_msg::BOOL, can_msg::AUX, can_msg::SIGNAL, can_msg::IMPORTANT, 3);
 //LCD Headlight
 can_msg::MsgEncode headlights_msg( can_msg::BOOL, can_msg::AUX, can_msg::HEADLIGHTS, can_msg::IMPORTANT, 1);
+// Horn
+can_msg::MsgEncode horn_msg( can_msg::BOOL, can_msg::AUX, can_msg::HORN, can_msg::IMPORTANT, 1);
 //motor speed
 can_msg::MsgEncode mspeed_msg( can_msg::UINT16, can_msg::MOTOR, can_msg::MSPEED, can_msg::INFORMATION, 1 );
 /*
@@ -52,6 +54,14 @@ void Can::send_headlights(bool state) {
   message.id = headlights_msg.id();
 	message.length = headlights_msg.len();
 	headlights_msg.buf( message.data, state );
+	can_send_message(&message);
+}
+
+void Can::send_horn(bool state) {
+  CanMessage message;
+  message.id = horn_msg.id();
+	message.length = horn_msg.len();
+	horn_msg.buf( message.data, state );
 	can_send_message(&message);
 }
 

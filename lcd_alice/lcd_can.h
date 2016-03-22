@@ -16,7 +16,8 @@ public:
   void send_wipers(bool wipers);
   void send_signals(bool left, bool right, bool hazards);
   void send_headlights(bool state);
-
+  void send_horn(bool state);
+  
   void read();
   bool speed_available();
   uint16_t speed();
