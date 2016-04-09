@@ -23,11 +23,15 @@ public:
   uint16_t speed();
   bool time_available();
   unsigned int * time();
+	bool fc_voltage_available();
+	uint32_t fc_voltage();
 private:
   unsigned int _speed;
   bool _speed_flag;
   unsigned int _time[3];
   bool _time_flag;
+	unsigned int _fc_voltage;
+	bool _fc_voltage_flag;
 };
 
 #endif

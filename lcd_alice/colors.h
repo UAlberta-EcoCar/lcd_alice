@@ -6,7 +6,8 @@
  * conversion: http://computingvoyage.com/982/color-bit-depth-reducer/
  */
 
-#define COLOR_BACKGROUND    0x18E4    //0x1A1F25
+//#define COLOR_BACKGROUND    0x18E4    //0x1A1F25
+#define COLOR_BACKGROUND		0x39E8    //Grey background
 
 #define COLOR_BUTTON_LIGHT  0x3CB9    //0x3b973d
 #define COLOR_BUTTON_DARK   0x126D    //0x184e70
@@ -21,5 +22,6 @@
 #define COLOR_SPEED         0x055C    //0x00adee
 
 #define COLOR_FONT_SPEED    COLOR_INDICTORS
+#define COLOR_FONT_FC_VOLTAGE    COLOR_INDICTORS
 
 #endif

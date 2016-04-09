@@ -13,6 +13,8 @@ can_msg::MsgEncode horn_msg( can_msg::BOOL, can_msg::AUX, can_msg::HORN, can_msg
 can_msg::MsgEncode mspeed_msg( can_msg::UINT16, can_msg::MOTOR, can_msg::MSPEED, can_msg::INFORMATION, 1 );
 // rtc
 can_msg::MsgEncode time_msg( can_msg::UINT8, can_msg::OTHER, can_msg::TIME, can_msg::INFORMATION, 6);
+// fc
+can_msg::MsgEncode fc_msg( can_msg::INT32, can_msg::FUEL_CELL, can_msg::FC_VOLT, can_msg::INFORMATION, 1);
 
 /*
  * Initializes CAN bus
@@ -21,10 +23,10 @@ void Can::begin() {
   // Initialize CAN
   Serial.println("Initializing CAN Controller");
   if (can_init(0,0,0,0,0,0,0,0)){
-    Serial.println("Error: CAN initialization :(");
+    Serial.println("Error: CAN initialization D:");
     while(1); // hang up program
   }
-  Serial.println("CAN Controller Initialized :)");
+  Serial.println("CAN Controller Initialized :D");
 }
 
 /*
@@ -87,7 +89,12 @@ void Can::read() {
       _time_flag = true;
     }
     // TODO: read motor current / voltage
+
     // TODO: read fuel cell voltage / current
+		if(message.id == fc_msg.id()) {
+      _fc_voltage = message.data[0] | (message.data[1] << 8);
+      _fc_voltage_flag = true;
+    }
   }
 }
 
@@ -106,4 +113,11 @@ bool Can::time_available() { return _time_flag; }
 unsigned int * Can::time() {
   _time_flag = false;
   return _time;
+}
+
+// FC voltage
+bool Can::fc_voltage_available() { return _fc_voltage_flag; }
+uint32_t Can::fc_voltage() {
+  _fc_voltage_flag = false;
+  return _fc_voltage;
 }
