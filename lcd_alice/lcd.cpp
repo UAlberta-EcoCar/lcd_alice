@@ -5,10 +5,10 @@ void Lcd::begin() {
 
   // Initialise the display
   if (!_tft->begin(RA8875_800x480)) {
-    Serial.println("Error: LCD Display Not Found :(");
+    Serial.println("Error: LCD Display Not Found D:");
     while (1);
   }
-  Serial.println("LCD Display Initialized :)");
+  Serial.println("LCD Display Initialized :D");
   _tft->displayOn(true);
   _tft->GPIOX(true);      // Enable TFT - display enable tied to GPIOX
   _tft->PWM1config(true, RA8875_PWM_CLK_DIV1024); // PWM output for backlight
@@ -83,9 +83,9 @@ void Lcd::draw_base_infoText() {
   _tft->textColor(0xFFFF, COLOR_BACKGROUND);
   _tft->textEnlarge(1);
   _tft->textWrite("Fuel Cell Voltage: ");
-	_tft->textSetCursor(x, y+20);
+	_tft->textSetCursor(x, y+30);
 	_tft->textWrite("Fuel Cell Current: ");
-	_tft->textSetCursor(x, y+40);
+	_tft->textSetCursor(x, y+60);
 	_tft->textWrite("Motor Current: ");
   _tft->graphicsMode();
 }
@@ -99,41 +99,41 @@ void Lcd::fc_voltage(int val) {
     _prev_fc_voltage = val;
     char a = val / 10 + '0';
     char b = val % 10 + '0';
-    //_tft->drawChar(380, 210, a, COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
-    //_tft->drawChar(430, 210, b, COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+    _tft->drawChar(700, 80, a, COLOR_FONT_INFO, COLOR_BACKGROUND, 1);
+    _tft->drawChar(720, 80, b, COLOR_FONT_INFO, COLOR_BACKGROUND, 1);
   } else {
-    //_tft->drawChar(380, 210, 'N', COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
-    //_tft->drawChar(430, 210, 'A', COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+    _tft->drawChar(700, 80, 'N', COLOR_FONT_INFO, COLOR_BACKGROUND, 1);
+    _tft->drawChar(720, 80, 'A', COLOR_FONT_INFO, COLOR_BACKGROUND, 1);
   }
 }
 
 void Lcd::fc_current(int val) {
 	if( val == _prev_fc_current ) return;
   if(val >= 0 && val <= 46) {
-    // draw fc voltage
+    // draw fc current
     _prev_fc_current = val;
     char a = val / 10 + '0';
     char b = val % 10 + '0';
-    //_tft->drawChar(380, 210, a, COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
-    //_tft->drawChar(430, 210, b, COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+  	_tft->drawChar(700, 110, a, COLOR_FONT_INFO, COLOR_BACKGROUND, 1);
+    _tft->drawChar(720, 110, b, COLOR_FONT_INFO, COLOR_BACKGROUND, 1);
   } else {
-    //_tft->drawChar(380, 210, 'N', COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
-    //_tft->drawChar(430, 210, 'A', COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+    _tft->drawChar(700, 110, 'N', COLOR_FONT_INFO, COLOR_BACKGROUND, 1);
+    _tft->drawChar(720, 110, 'A', COLOR_FONT_INFO, COLOR_BACKGROUND, 1);
   }
 }
 
 void Lcd::motor_current(int val) {
 	if( val == _prev_mCurrent ) return;
   if(val >= 0 && val <= 46) {
-    // draw fc voltage
+    // draw motor current
     _prev_mCurrent = val;
     char a = val / 10 + '0';
     char b = val % 10 + '0';
-    //_tft->drawChar(380, 210, a, COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
-    //_tft->drawChar(430, 210, b, COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+    _tft->drawChar(700, 140, a, COLOR_FONT_INFO, COLOR_BACKGROUND, 1);
+    _tft->drawChar(720, 140, b, COLOR_FONT_INFO, COLOR_BACKGROUND, 1);
   } else {
-    //_tft->drawChar(380, 210, 'N', COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
-    //_tft->drawChar(430, 210, 'A', COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+    _tft->drawChar(700, 140, 'N', COLOR_FONT_INFO, COLOR_BACKGROUND, 1);
+    _tft->drawChar(720, 140, 'A', COLOR_FONT_INFO, COLOR_BACKGROUND, 1);
   }
 }
 
