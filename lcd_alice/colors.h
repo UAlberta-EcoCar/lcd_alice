@@ -12,6 +12,7 @@
 #define COLOR_BUTTON_LIGHT  0x3CB9    //0x3b973d
 #define COLOR_BUTTON_DARK   0x126D    //0x184e70
 #define COLOR_BUTTON_IMG    0xFFFF    //0xFFFFF
+#define COLOR_BUTTON_SELECTED  0x2E4D
 
 #define COLOR_INDICTORS     0x2E4D    //0x2ecc71
 

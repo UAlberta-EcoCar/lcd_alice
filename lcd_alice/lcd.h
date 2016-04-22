@@ -27,10 +27,12 @@ public:
   void hazards(bool on);
   void highlight_button(int button);
 	void fc_voltage(int val);
+	void draw_base_infoText();
+	void fc_current(int val);
+	void motor_current(int val);
 
 private:
   void draw_speed(int start, int stop, bool on);
-	void draw_fc_voltage(int start, int stop, bool on);
 
   Adafruit_RA8875 * _tft;
   char _time_str[8];
@@ -38,6 +40,8 @@ private:
   bool _prev_left, _prev_right;
   int _prev_hightlight;
 	int _prev_fc_voltage;
+	int _prev_fc_current;
+	int _prev_mCurrent;
 };
 
 #endif

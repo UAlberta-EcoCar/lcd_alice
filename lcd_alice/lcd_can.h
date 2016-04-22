@@ -25,6 +25,11 @@ public:
   unsigned int * time();
 	bool fc_voltage_available();
 	uint32_t fc_voltage();
+	bool mCurrent_available();
+	uint16_t mCurrent();
+	bool fc_current_available();
+	uint32_t fc_current();
+
 private:
   unsigned int _speed;
   bool _speed_flag;
@@ -32,6 +37,10 @@ private:
   bool _time_flag;
 	unsigned int _fc_voltage;
 	bool _fc_voltage_flag;
+	unsigned int _mCurrent;
+	bool _mCurrent_flag;
+	unsigned int _fc_current;
+	bool _fc_current_flag;
 };
 
 #endif

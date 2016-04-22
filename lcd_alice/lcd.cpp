@@ -1,5 +1,4 @@
 #include "lcd.h"
-//#include <Fonts/FreeSans18pt7b.h>
 
 void Lcd::begin() {
   _tft = new Adafruit_RA8875(RA8875_CS, RA8875_RESET);
@@ -15,7 +14,6 @@ void Lcd::begin() {
   _tft->PWM1config(true, RA8875_PWM_CLK_DIV1024); // PWM output for backlight
   _tft->PWM1out(255);
 
-	//_tft->setFont(&FreeSans18pt7b);
   _tft->fillScreen(COLOR_BACKGROUND);
 
   _prev_speed = 0; _prev_left = false; _prev_right = false; _prev_hightlight = 4;
@@ -65,8 +63,6 @@ void Lcd::speed(int val) {
     if( val > _prev_speed ) draw_speed( _prev_speed, val, true );
     else if ( val < _prev_speed ) draw_speed( val, _prev_speed, false );
     _prev_speed = val;
-
-    // add font
     char a = val / 10 + '0';
     char b = val % 10 + '0';
     _tft->drawChar(380, 210, a, COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
@@ -78,11 +74,59 @@ void Lcd::speed(int val) {
   }
 }
 
+
+// TODO: Test spacing
+void Lcd::draw_base_infoText() {
+	int x = 600; int y = 80;
+  _tft->textMode();
+  _tft->textSetCursor(x, y);
+  _tft->textColor(0xFFFF, COLOR_BACKGROUND);
+  _tft->textEnlarge(1);
+  _tft->textWrite("Fuel Cell Voltage: ");
+	_tft->textSetCursor(x, y+20);
+	_tft->textWrite("Fuel Cell Current: ");
+	_tft->textSetCursor(x, y+40);
+	_tft->textWrite("Motor Current: ");
+  _tft->graphicsMode();
+}
+
+
+// TODO: Adjust spacing and draw text
 void Lcd::fc_voltage(int val) {
   if( val == _prev_fc_voltage ) return;
   if(val >= 0 && val <= 46) {
     // draw fc voltage
     _prev_fc_voltage = val;
+    char a = val / 10 + '0';
+    char b = val % 10 + '0';
+    //_tft->drawChar(380, 210, a, COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+    //_tft->drawChar(430, 210, b, COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+  } else {
+    //_tft->drawChar(380, 210, 'N', COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+    //_tft->drawChar(430, 210, 'A', COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+  }
+}
+
+void Lcd::fc_current(int val) {
+	if( val == _prev_fc_current ) return;
+  if(val >= 0 && val <= 46) {
+    // draw fc voltage
+    _prev_fc_current = val;
+    char a = val / 10 + '0';
+    char b = val % 10 + '0';
+    //_tft->drawChar(380, 210, a, COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+    //_tft->drawChar(430, 210, b, COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+  } else {
+    //_tft->drawChar(380, 210, 'N', COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+    //_tft->drawChar(430, 210, 'A', COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
+  }
+}
+
+void Lcd::motor_current(int val) {
+	if( val == _prev_mCurrent ) return;
+  if(val >= 0 && val <= 46) {
+    // draw fc voltage
+    _prev_mCurrent = val;
     char a = val / 10 + '0';
     char b = val % 10 + '0';
     //_tft->drawChar(380, 210, a, COLOR_FONT_SPEED, COLOR_BACKGROUND, 8);
@@ -168,19 +212,19 @@ void Lcd::highlight_button(int button) {
     // add current highlight
     switch(button) {
     case LIGHT:
-      _tft->drawCircle(260, 400, 56, COLOR_BUTTON_DARK);
-      _tft->drawCircle(260, 400, 55, COLOR_BUTTON_DARK);
-      _tft->drawCircle(260, 400, 54, COLOR_BUTTON_DARK);
+      _tft->drawCircle(260, 400, 56, COLOR_BUTTON_SELECTED);
+      _tft->drawCircle(260, 400, 55, COLOR_BUTTON_SELECTED);
+      _tft->drawCircle(260, 400, 54, COLOR_BUTTON_SELECTED);
       break;
     case WIPER:
-      _tft->drawCircle(540, 400, 56, COLOR_BUTTON_DARK);
-      _tft->drawCircle(540, 400, 55, COLOR_BUTTON_DARK);
-      _tft->drawCircle(540, 400, 54, COLOR_BUTTON_DARK);
+      _tft->drawCircle(540, 400, 56, COLOR_BUTTON_SELECTED);
+      _tft->drawCircle(540, 400, 55, COLOR_BUTTON_SELECTED);
+      _tft->drawCircle(540, 400, 54, COLOR_BUTTON_SELECTED);
       break;
     case HAZARDS:
-      _tft->drawCircle(400, 400, 56, COLOR_BUTTON_DARK);
-      _tft->drawCircle(400, 400, 55, COLOR_BUTTON_DARK);
-      _tft->drawCircle(400, 400, 54, COLOR_BUTTON_DARK);
+      _tft->drawCircle(400, 400, 56, COLOR_BUTTON_SELECTED);
+      _tft->drawCircle(400, 400, 55, COLOR_BUTTON_SELECTED);
+      _tft->drawCircle(400, 400, 54, COLOR_BUTTON_SELECTED);
       break;
     }
 

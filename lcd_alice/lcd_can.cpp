@@ -10,11 +10,15 @@ can_msg::MsgEncode headlights_msg( can_msg::BOOL, can_msg::AUX, can_msg::HEADLIG
 // Horn
 can_msg::MsgEncode horn_msg( can_msg::BOOL, can_msg::AUX, can_msg::HORN, can_msg::IMPORTANT, 1);
 //motor speed
-can_msg::MsgEncode mspeed_msg( can_msg::UINT16, can_msg::MOTOR, can_msg::MSPEED, can_msg::INFORMATION, 1 );
+can_msg::MsgEncode mspeed_msg( can_msg::UINT16, can_msg::MOTOR, can_msg::MCURRENT, can_msg::INFORMATION, 1 );
+//motor current
+can_msg::MsgEncode mcurrent_msg( can_msg::UINT16, can_msg::MOTOR, can_msg::MSPEED, can_msg::INFORMATION, 1 );
 // rtc
 can_msg::MsgEncode time_msg( can_msg::UINT8, can_msg::OTHER, can_msg::TIME, can_msg::INFORMATION, 6);
-// fc
-can_msg::MsgEncode fc_msg( can_msg::INT32, can_msg::FUEL_CELL, can_msg::FC_VOLT, can_msg::INFORMATION, 1);
+// fc voltage
+can_msg::MsgEncode fc_voltage_msg( can_msg::INT32, can_msg::FUEL_CELL, can_msg::FC_CURR, can_msg::INFORMATION, 1);
+// fc current
+can_msg::MsgEncode fc_current_msg( can_msg::INT32, can_msg::FUEL_CELL, can_msg::FC_VOLT, can_msg::INFORMATION, 1);
 
 /*
  * Initializes CAN bus
@@ -89,11 +93,19 @@ void Can::read() {
       _time_flag = true;
     }
     // TODO: read motor current / voltage
+		if( message.id == mcurrent_msg.id() ) {
+      _mCurrent = message.data[0] | (message.data[1] << 8);
+      _mCurrent_flag = true;
+    }
 
     // TODO: read fuel cell voltage / current
-		if(message.id == fc_msg.id()) {
+		if(message.id == fc_voltage_msg.id()) {
       _fc_voltage = message.data[0] | (message.data[1] << 8);
       _fc_voltage_flag = true;
+    }
+		if(message.id == fc_current_msg.id()) {
+      _fc_current = message.data[0] | (message.data[1] << 8);
+      _fc_current_flag = true;
     }
   }
 }
@@ -120,4 +132,18 @@ bool Can::fc_voltage_available() { return _fc_voltage_flag; }
 uint32_t Can::fc_voltage() {
   _fc_voltage_flag = false;
   return _fc_voltage;
+}
+
+// FC current
+bool Can::fc_current_available() { return _fc_current_flag; }
+uint32_t Can::fc_current() {
+  _fc_current_flag = false;
+  return _fc_current;
+}
+
+// Motor Current
+bool Can::mCurrent_available() { return _mCurrent_flag ; }
+uint16_t Can::mCurrent() {
+  _mCurrent_flag = false;
+  return _mCurrent;
 }

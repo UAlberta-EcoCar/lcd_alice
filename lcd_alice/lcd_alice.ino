@@ -25,6 +25,7 @@ void setup() {
   myLcd.begin();
   myLcd.speed_dials();
   myLcd.logo();
+	myLcd.draw_base_infoText();
   myLcd.time(0, 0, 0);
 
   myLcd.speed(0);
@@ -46,6 +47,9 @@ int light = false;
 int wiper = false;
 int hazards = false;
 int speed = 0;
+int fc_voltage = 0;
+int fc_current = 0;
+int m_current = 0;
 unsigned int * now;
 
 void loop() {
@@ -196,6 +200,24 @@ void loop() {
       Serial.print("Speed: ");
       Serial.println(speed);
       myLcd.speed(speed);
+    }
+		if(myCan.fc_voltage_available()) {
+      fc_voltage = myCan.fc_voltage();
+      Serial.print("FC Voltage: ");
+      Serial.println(fc_voltage);
+      myLcd.fc_voltage(fc_voltage);
+    }
+		if(myCan.fc_current_available()) {
+      fc_current = myCan.fc_current();
+      Serial.print("FC Current: ");
+      Serial.println(fc_current);
+      myLcd.fc_current(fc_current);
+    }
+		if(myCan.mCurrent_available()) {
+      m_current = myCan.mCurrent();
+      Serial.print("Motor Current: ");
+      Serial.println(m_current);
+      myLcd.motor_current(m_current);
     }
   }
 
